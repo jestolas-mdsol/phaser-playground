@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import landingApi from '../../apis/Landing';
 import { updateTestAsync } from '../../actions/main';
 
+import Game from '../Game';
+
 const muiStyles = {
   textfield: {
     color: '#FFFFFF',
@@ -62,46 +64,11 @@ class App extends Component {
     return (
       <div className="landing__container">
         <div className="heading__wrapper">
-          <h1 >Boilerplate Landing Page</h1>
-          <h2>Foo Bar Baz!</h2>
+          <h1>Learning Phaser Game Engine</h1>
         </div>
         <div className="form__wrapper">
-          <TextField
-            className="form__input"
-            hintText=""
-            floatingLabelText="Enter Username"
-            floatingLabelStyle={muiStyles.floatingLabel}
-            hintStyle={muiStyles.floatingHint}
-            inputStyle={muiStyles.textfield}
-            onChange={this.handleUsernameChange}
-            value={this.state.username}
-          />
-          <TextField
-            className="form__input"
-            type="password"
-            style={muiStyles.textfield}
-            hintText=""
-            floatingLabelText="Enter Password"
-            floatingLabelStyle={muiStyles.floatingLabel}
-            hintStyle={muiStyles.floatingHint}
-            inputStyle={muiStyles.textfield}
-            onChange={this.handlePasswordChange}
-            onKeyDown={this.handlePressEnter}
-            value={this.state.password}
-          />
+          <Game />
         </div>
-        <RaisedButton
-          className="submit--button"
-          label="L/R"
-          primary
-          onTouchTap={this.handleSubmit}
-        />
-        <RaisedButton
-          className="submit--button"
-          label="ClickMe"
-          primary
-          onTouchTap={this.updateTestState}
-        />
       </div>
     );
   }
