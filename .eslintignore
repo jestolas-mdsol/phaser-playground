@@ -1,0 +1,5 @@
+webpack/**
+config/**
+build/**
+node_modules/**
+./server.js

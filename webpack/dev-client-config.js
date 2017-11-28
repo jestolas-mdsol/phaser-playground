@@ -1,5 +1,3 @@
-'use strict'
-
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ProgressBarPlugin = require('progress-bar-webpack-plugin');
@@ -8,15 +6,15 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var qs = require('qs');
 
-var TEMPLATE = './src/index.html';
+var TEMPLATE = path.resolve(__dirname, './index.html');
 var INDEX = 'index.html';
-var JSX_ENTRY_PATH = './src/assets/index.jsx';
-var CSS_ENTRY_PATH = './src/assets/stylesheets/main.scss';
+var JSX_ENTRY_PATH = path.resolve(__dirname, '../src/assets/index.jsx');
+var CSS_ENTRY_PATH = path.resolve(__dirname, '../src/assets/stylesheets/main.scss');
 var OUTPUT_PATH = '../build';
 
 var phaserModule = path.join(__dirname, '../node_modules/phaser-ce/');
-var phaser = path.join(phaserModule, 'build/custom/phaser-split.js');
 var pixi = path.join(phaserModule, 'build/custom/pixi.js');
+var phaser = path.join(phaserModule, 'build/custom/phaser-split.js');
 var p2 = path.join(phaserModule, 'build/custom/p2.js');
 
 module.exports = {
@@ -24,6 +22,7 @@ module.exports = {
   target: 'web',
   devtool: 'cheap-source-map',
   entry: {
+  // entry: [
     app: [
       'webpack-hot-middleware/client',
       'babel-polyfill',
@@ -31,6 +30,7 @@ module.exports = {
       CSS_ENTRY_PATH,
     ],
     vendor: ['pixi', 'p2', 'phaser', 'webfontloader'],
+  // ],
   },
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
@@ -44,13 +44,13 @@ module.exports = {
         test: /\.js$/,
         use: 'babel-loader',
         // exclude: /node_modules/,
-        include: path.join(__dirname, '../src'),
+        include: [path.join(__dirname, '../src')],
       },
       {
         test: /\.jsx$/,
         use: 'babel-loader',
         // exclude: /node_modules/,
-        include: path.join(__dirname, '../src'),
+        include: [path.join(__dirname, '../src')],
       },
       {
         // IMPORTANT:
@@ -72,18 +72,18 @@ module.exports = {
           },
         },
       },
-      { test: /pixi\.js/, use: ['expose-loader?PIXI'] },
-      { test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
-      { test: /p2\.js/, use: ['expose-loader?p2'] },
+      { test: /pixi\.js/, use: 'expose-loader?PIXI' },
+      { test: /phaser-split\.js$/, use: 'expose-loader?Phaser' },
+      { test: /p2\.js/, use: 'expose-loader?p2' },
     ],
   },
   resolve: {
     modules: ['app', 'node_modules'],
     extensions: ['.js', '.jsx', '.scss'],
     alias: {
-      phaser: phaser,
-      pixi: pixi,
-      p2: p2,
+      'pixi': pixi,
+      'phaser': phaser,
+      'p2': p2,
     }
   },
   node: {
@@ -91,6 +91,7 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
   },
+  externals: { "Phaser": "Phaser" },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NamedModulesPlugin(),
@@ -107,21 +108,21 @@ module.exports = {
       filename: INDEX,
       template: TEMPLATE,
       chunks: ['vendor', 'app'],
-      chunksSortMode: 'manual',
-      minify: {
-        removeAttributeQuotes: false,
-        collapseWhitespace: false,
-        html5: false,
-        minifyCSS: false,
-        minifyJS: false,
-        minifyURLs: false,
-        removeComments: false,
-        removeEmptyAttributes: false,
-      },
+      // chunksSortMode: 'manual',
+      // minify: {
+      //   removeAttributeQuotes: false,
+      //   collapseWhitespace: false,
+      //   html5: false,
+      //   minifyCSS: false,
+      //   minifyJS: false,
+      //   minifyURLs: false,
+      //   removeComments: false,
+      //   removeEmptyAttributes: false,
+      // },
       hash: false,
     }),
-    new Dotenv({
-      path: './.env',
-    }),
+    // new Dotenv({
+    //   path: './.env',
+    // }),
   ],
 };
