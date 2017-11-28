@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import landingApi from '../../apis/Landing';
 import { updateTestAsync } from '../../actions/main';
 
-import Game from '../Game';
+// import Game from '../Game';
 
 const muiStyles = {
   textfield: {
@@ -67,7 +67,6 @@ class App extends Component {
           <h1>Learning Phaser Game Engine</h1>
         </div>
         <div className="form__wrapper">
-          <Game />
         </div>
       </div>
     );
